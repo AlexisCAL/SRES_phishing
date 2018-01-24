@@ -1,6 +1,6 @@
 % TP Threat Intel – Conception d’un outil de détection d’hameçonnage ciblé
 % georges.bossert@sekoia.fr
-% Mercredi 24 janvier 2018
+% 24 janvier 2018
 
 ---
 header-includes:
