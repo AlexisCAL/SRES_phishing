@@ -46,12 +46,26 @@ Méthode
   * le fonctionnement général de votre solution.
         1
         Appel API certstream -> Récupération des certificats émis
+
         2
         Extraction de l'URL
+
         3
         Algorithme de ressemblance de chaînes :
           - nombre de caractères identiques (ou à +-1 près)
           - différence aux niveaux des caractères ascii
 
         Une comparaison des noms de domaines :
-          - .gov, .gouv, .gob 
+          - sur les seconds et troisièmes niveaux : .gov, .gouv, .gob ...
+          - sur les troisièmes et plus : .presidencia, .ministere, europa ...
+
+        4
+        Appel à geoAPI pour vérifier si le serveur porteur du cible appartient au même
+        pays que son de domaine
+        Les gouvernements utilisent leur propre infrastructure
+
+        5
+        Appel à virusTotal
+
+        6
+        Classifications des urls qui "match" les filtres sur une echelle de points
