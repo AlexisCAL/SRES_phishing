@@ -1,11 +1,15 @@
-% TP Threat Intel – Conception d’un outil de détection d’hameçonnage ciblé
-% georges.bossert@sekoia.fr
-% 24 janvier 2018
-
 ---
+title: 'TP Threat Intel – Conception d’un outil de détection d’hameçonnage ciblé'
+author:
+  - \url{georges.bossert@sekoia.fr}
 header-includes:
   - \usepackage[top=1in, bottom=1.25in, left=1.25in, right=1.25in]{geometry}
+  - \usepackage[utf8]{inputenc}
+  - \usepackage[T1]{fontenc}
+  - \usepackage[francais]{babel}
 ---
+
+<!-- pandoc -f markdown -o README.pdf README.md -M date="`date "+%d %B %Y"`" -->
 
 # Objectifs de réalisation
 Un flux d’information au format STIXv2 de sites d’hammeçonnages ciblés.
