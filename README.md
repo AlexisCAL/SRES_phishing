@@ -33,8 +33,9 @@ Un dossier de conception sera rédigé et comportera les points suivants :
 
 # Livrables
 Les livrables suivants devront être envoyés par email à l’adresse  :
-- un dossier de conception envoyé par email avant la fin de séance de TP
-- le compte rendu final du TP comportant le dossier de conception, les résultat d’exécutions et les sources de l’outil. Il devra être envoyé au maximum 7 jours après la séance de TP.
+
+* un dossier de conception envoyé par email avant la fin de séance de TP
+* le compte rendu final du TP comportant le dossier de conception, les résultat d’exécutions et les sources de l’outil. Il devra être envoyé au maximum 7 jours après la séance de TP.
 
 # Evaluation
 En plus du respect des consignes, la créativité de la solution sera évaluée.
