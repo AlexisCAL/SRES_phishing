@@ -40,5 +40,5 @@ Les livrables suivants devront être envoyés par email à l’adresse  :
 En plus du respect des consignes, la créativité de la solution sera évaluée.
 
 
-[^0]: [https://oasis-open.github.io/cti-documentation/examples/indicator-for-malicious-url](https://oasis-open.github.io/cti-documentation/examples/indicator-for-malicious-url)
+[^0]: \url{https://oasis-open.github.io/cti-documentation/examples/indicator-for-malicious-url}
 
