@@ -34,7 +34,14 @@ Développé dans le langage de votre choix, votre solution stockera la liste des
 Un dossier de conception sera rédigé et comportera les points suivants :
 
 * les objectifs de votre outil (rappeler ce qu'est une attaque par hammeçonnage ciblé);
+  - répérer les sites de phishing souhaitant usurper les sites gouvernementaux
 * la liste des sources et services utilisés pas votre solution et leurs descriptions succintes;
+    - .csv comportant une liste des sites gouvernementaux référencés dans le monde : (url source)
+    - une liste de mots clés en plusieurs langue, à élargir en fonction du nombre de matchs possibles
+      (assemblé, ambassade, ministère, impôt, président, taxe, passeport ...)
+    - geoAPI + circl
+    - virustotal
+  -
 * le fonctionnement général de votre solution.
 
 # Livrables
@@ -48,4 +55,3 @@ En plus du respect des consignes, la créativité de la solution sera évaluée.
 
 
 [^0]: \url{https://oasis-open.github.io/cti-documentation/examples/indicator-for-malicious-url}
-
