@@ -19,7 +19,7 @@ Imaginer, concevoir puis implémenter une solution chargée de détecter automat
 * [CertStream Cali Dog Security](https://certstream.calidog.io/)
 * [Alexa Top 1 Million Sites](http://s3.amazonaws.com/alexa-static/top-1m.csv.zip)
 * [Umbrella Popularity List](http://s3-us-west-1.amazonaws.com/umbrella-static/index.html)
-* [VirusTotal : URL Abuse](hhttps://www.virustotal.com/en/documentation/public-api/#scanning-urls)
+* [VirusTotal : URL Abuse](https://www.virustotal.com/en/documentation/public-api/#scanning-urls)
 * [BGP Ranking / CIRCL](https://www.circl.lu/projects/bgpranking/)
 
 Développé dans le langage de votre choix, votre solution stockera la liste des alertes de détection de sites web d’hammeçonnage dans un fichier. L'alerte exprimée au format STIXv2 (type Indicator [^0]) comportera à minima les informations suivantes:
