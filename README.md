@@ -9,7 +9,7 @@ header-includes:
   - \usepackage[francais]{babel}
   - \usepackage{datetime}
 ---
-\newdate{rendu}{07}{02}{2018}
+
 <!-- pandoc -f markdown -o README.pdf README.md -M date="`date "+%d %B %Y"`" -->
 
 # Objectifs de réalisation
@@ -35,21 +35,20 @@ Développé dans le langage de votre choix, votre solution stockera la liste des
 Un dossier de conception sera rédigé et comportera les points suivants :
 
 * les objectifs de votre outil (rappeler ce qu'est une attaque par hammeçonnage ciblé);
-  - répérer les sites de phishing souhaitant usurper les sites gouvernementaux
+	* répérer les sites de phishing souhaitant usurper les sites gouvernementaux.
 * la liste des sources et services utilisés pas votre solution et leurs descriptions succintes;
-    - .csv comportant une liste des sites gouvernementaux référencés dans le monde : (url source)
-    - une liste de mots clés en plusieurs langue, à élargir en fonction du nombre de matchs possibles
-      (assemblé, ambassade, ministère, impôt, président, taxe, passeport ...)
-    - geoAPI + circl
-    - virustotal
-  -
+    * .csv comportant une liste des sites gouvernementaux référencés dans le monde : (url source);
+    * une liste de mots clés en plusieurs langue, à élargir en fonction du nombre de matchs possibles
+      (assemblé, ambassade, ministère, impôt, président, taxe, passeport ...);
+    * geoAPI + circl;
+    * virustotal.
 * le fonctionnement général de votre solution.
 
 # Livrables
 Les livrables suivants devront être envoyés par email à l’adresse  :
 
 * un dossier de conception envoyé par email avant la fin de séance de TP;
-* le compte rendu final du TP comportant le dossier de conception, les résultat d’exécutions et les sources de l’outil. Il devra être envoyé au maximum 14 jours après la séance de TP (\displaydate{rendu}).
+* le compte rendu final du TP comportant le dossier de conception, les résultat d’exécutions et les sources de l’outil. Il devra être envoyé au maximum 14 jours après la séance de TP (\formatdate{07}{02}{2018}).
 
 # Evaluation
 En plus du respect des consignes, la créativité de la solution sera évaluée.
