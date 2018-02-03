@@ -1,12 +1,3 @@
-# Testing URL
-# funding.tmp.govt.nz
-# vienkiemsattv.gov.vn
-# transparencia.mogeiro.pb.gov.br
-# banovici.gov.ba
-
-# some curl to be sure
-# curl -v --request POST --url 'https://www.virustotal.com/vtapi/v2/url/report' -d apikey=7d683f2eeae6790c17b6a12d295894e9692bc06aa2af43e7851e7faba5dc8bcc -d 'resource=http://www.funding.tmp.govt.nz/'
-
 import requests
 import json
 import time

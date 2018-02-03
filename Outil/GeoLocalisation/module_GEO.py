@@ -1,3 +1,7 @@
+# pip install ipapi
+# apt-get install python-dnspython
+
+
 import dns.resolver
 import ipapi
 import json
