@@ -7,6 +7,15 @@ import certstream
 exec(open('main.py').read())
 
 
+def pre_process(domains):
+    possible_threats = []
+    for domain in domains:
+        if domain not in officials and domain in (extensions + words):
+            possible_threats.add(domain)
+    if len(possible_threats) == 0:
+        return
+    feed_main(possible_threats)
+
 def new_cert(message, context):
     if message['message_type'] == "heartbeat":
         return
@@ -16,7 +25,7 @@ def new_cert(message, context):
 
         if len(all_domains) == 0:
             return
-        feed_main(all_domains)
+        pre_process(all_domains)
 
 
 certstream.listen_for_events(new_cert)
