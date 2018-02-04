@@ -1,31 +1,36 @@
-import requests
 import json
-import time
 import logging
+import time
 
+import requests
 
 VT_URL_report = 'https://www.virustotal.com/vtapi/v2/url/report'
-VT_URL_scan   = 'https://www.virustotal.com/vtapi/v2/url/scan'
-VT_API_key    = '7d683f2eeae6790c17b6a12d295894e9692bc06aa2af43e7851e7faba5dc8bcc'
+VT_URL_scan = 'https://www.virustotal.com/vtapi/v2/url/scan'
+VT_API_key = '7d683f2eeae6790c17b6a12d295894e9692bc06aa2af43e7851e7faba5dc8bcc'
+
 
 def format_url(url):
     # If we need the 'http://' format
     new_url = 'http://www.' + url
     return new_url
 
+
 def scan_request(url):
-    params = {'apikey': VT_API_key, 'url':url}
+    params = {'apikey': VT_API_key, 'url': url}
     response = requests.post(VT_URL_scan, params=params)
     json_response = response.json()
     return json_response
 
+
 def report_request(url):
-    params = {'apikey': VT_API_key, 'resource':url}
+    params = {'apikey': VT_API_key, 'resource': url}
     response = requests.post(VT_URL_report, params=params)
     json_response = response.json()
     return json_response
 
 #
+
+
 def parsing_response(report_json):
     # report_data = json.dumps(report_json)
 
@@ -39,31 +44,32 @@ def parsing_response(report_json):
     result_json = json.dumps(result_data)
     return result_json
 
+
 def VT_API_call(url):
     new_url = format_url(url)
 
-    try :
+    try:
         scan_json = scan_request(new_url)
         print 'scan_request sucessful'
         # print scan_json
-    except :
+    except:
         print 'scan_request failed for ', new_url
 
     # Threading ? Or Queueing ?
-    time.sleep( 10 ) # waiting for verification completion
+    time.sleep(10)  # waiting for verification completion
 
-    try :
+    try:
         report_json = report_request(new_url)
         print 'report_request sucessful'
         # print report_json
-    except :
+    except:
         print 'report_request failed for ', new_url
 
-    try :
+    try:
         ret = parsing_response(report_json)
         print 'Result from VirusTotal verification :'
         print ' >>>', ret
-    except :
+    except:
         print 'parsing_response failed for ', new_url
 
 

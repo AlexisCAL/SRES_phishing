@@ -6,24 +6,23 @@
 # python setup.py build
 # python setup.py install
 
+import json
+
+import bgpranking_web
 import dns.resolver
 import ipapi
-import json
-import bgpranking_web
-
 
 # host = 'animadores.ceroveinticinco.gov.ar'
 host = 'gold.service.gov.au'
 
 
-
-def IPs_from_URL (url):
+def IPs_from_URL(url):
     IPlist = {}
-    try :
+    try:
         answers_IPv4 = dns.resolver.query(url, 'A')
         for rdata in answers_IPv4:
             IPlist['IPv4'] = rdata.address
-    except :
+    except:
         print 'No IPv4 address found'
         IPlist['IPv4'] = None
 
@@ -36,39 +35,43 @@ def IPs_from_URL (url):
 
     return IPlist
 
-def Country_from_IPs (IPlist,url):
-    geo_dict = {'url':url}
+
+def Country_from_IPs(IPlist, url):
+    geo_dict = {'url': url}
     geo_dict['IPv4'] = IPlist['IPv4']
-    try :
-        geo_dict['country'] = ipapi.location(IPlist['IPv4'],None,'country')
-    except :
+    try:
+        geo_dict['country'] = ipapi.location(IPlist['IPv4'], None, 'country')
+    except:
         print 'No matching country found for IPv4:', IPlist['IPv4']
         geo_dict['country'] = None
 
     return geo_dict
 
-def matching_country (geo_dict):
+
+def matching_country(geo_dict):
     domain = geo_dict['url'].split(".")[-1]
     country = geo_dict['country']
 
-    if domain == country :
+    if domain == country:
         geo_dict['geo_score'] = 1
-    else :
+    else:
         geo_dict['geo_score'] = 0
 
     return geo_dict
 
-def Circl_API_call (geo_dict):
+
+def Circl_API_call(geo_dict):
     ip = geo_dict['IPv4']
     circl_lookup = bgpranking_web.ip_lookup(ip)
-    try :
+    try:
         asn = int(circl_lookup['history'][0]['asn'])
         # asn = 43765
         geo_dict['asn'] = asn
-        circl_ranks = bgpranking_web.all_ranks_single_asn(asn, None, None, None, None)
+        circl_ranks = bgpranking_web.all_ranks_single_asn(
+            asn, None, None, None, None)
         ranks = []
         average = 0
-        try :
+        try:
             for date in circl_ranks:
                 ranks.append(circl_ranks[str(date)]['total'])
 
@@ -76,19 +79,18 @@ def Circl_API_call (geo_dict):
             for rank in ranks:
                 average = average + rank
             average = average / len(ranks)
-        except :
+        except:
             print 'No ranks found for ASN : ', asn
 
         geo_dict['circl_score'] = average
-    except :
+    except:
         print 'No ASN found for IPv4 : ', ip
         geo_dict['asn'] = None
-
 
     return geo_dict
 
 
-def localisation (url):
+def localisation(url):
     IPlist = IPs_from_URL(url)
     geo_dict = Country_from_IPs(IPlist, url)
     geo_dict = matching_country(geo_dict)
@@ -97,5 +99,6 @@ def localisation (url):
 
     print geo_json
     return geo_json
+
 
 localisation(host)
