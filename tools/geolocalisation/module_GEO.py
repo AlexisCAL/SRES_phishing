@@ -23,7 +23,7 @@ def IPs_from_URL(url):
         for rdata in answers_IPv4:
             IPlist['IPv4'] = rdata.address
     except:
-        print 'No IPv4 address found'
+        print('No IPv4 address found')
         IPlist['IPv4'] = None
 
     # try :
@@ -42,7 +42,7 @@ def Country_from_IPs(IPlist, url):
     try:
         geo_dict['country'] = ipapi.location(IPlist['IPv4'], None, 'country')
     except:
-        print 'No matching country found for IPv4:', IPlist['IPv4']
+        print('No matching country found for IPv4:', IPlist['IPv4'])
         geo_dict['country'] = None
 
     return geo_dict
@@ -80,11 +80,11 @@ def Circl_API_call(geo_dict):
                 average = average + rank
             average = average / len(ranks)
         except:
-            print 'No ranks found for ASN : ', asn
+            print('No ranks found for ASN : ', asn)
 
         geo_dict['circl_score'] = average
     except:
-        print 'No ASN found for IPv4 : ', ip
+        print('No ASN found for IPv4 : ', ip)
         geo_dict['asn'] = None
 
     return geo_dict
@@ -97,7 +97,7 @@ def localisation(url):
     geo_dict = Circl_API_call(geo_dict)
     geo_json = json.dumps(geo_dict)
 
-    print geo_json
+    print(geo_json)
     return geo_json
 
 

@@ -1,3 +1,5 @@
+import sys
+
 ext = open('open_data/clean_ext')
 word = open('open_data/clean_word')
 add = open('open_data/clean_add')
@@ -19,5 +21,15 @@ def feed_main(domains):
     for domain in domains:
         print(domain, "\n")
 
-
-exec(open('tools/certstream/module_CS.py').read())
+if __name__ == '__main__':
+    if len(sys.argv) == 2:
+        if sys.argv[1] == 'cs':
+            exec(open('tools/certstream/module_CS.py').read())
+        elif sys.argv[1] == 'geo':
+            exec(open('tools/geolocalisation/module_GEO.py').read())
+        elif sys.argv[1] == 'vt':
+            exec(open('tools/virus_total/module_VT.py').read())
+        elif sys.argv[1] == 'all':
+            exec(open('tools/certstream/module_CS.py').read())
+            exec(open('tools/geolocalisation/module_GEO.py').read())
+            exec(open('tools/virus_total/module_VT.py').read())
