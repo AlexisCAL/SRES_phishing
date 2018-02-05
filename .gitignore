@@ -1,2 +1,5 @@
 # Kate temporary files
 *.kate-swp
+
+# Dolphin config file
+.directory
