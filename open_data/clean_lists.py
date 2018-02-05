@@ -12,4 +12,6 @@ for w in words:
     word.write("%s\n" % w)
 add = open('open_data/clean_add', 'w')
 for a in officials:
+    if 'http://' in a:
+        a = a[7:]
     add.write("%s\n" % a)
