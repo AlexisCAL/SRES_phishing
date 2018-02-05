@@ -18,3 +18,6 @@ officials = [x.strip() for x in officials]
 def feed_main(domains):
     for domain in domains:
         print(domain, "\n")
+
+
+exec(open('tools/certstream/module_CS.py').read())

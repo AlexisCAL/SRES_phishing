@@ -4,8 +4,6 @@ import time
 
 import certstream
 
-exec(open('main.py').read())
-
 
 def pre_process(domains):
     possible_threats = []
@@ -15,6 +13,7 @@ def pre_process(domains):
     if len(possible_threats) == 0:
         return
     feed_main(possible_threats)
+
 
 def new_cert(message, context):
     if message['message_type'] == "heartbeat":
