@@ -98,7 +98,7 @@ def Circl_API_call(geo_dict):
 
 def localisation(url):
     geo_dict = {'url': url, 'IP': None, 'asn': None,
-                'country': None, 'geo_score': None, 'circl_score': None}
+                'country': None, 'geo_score': False, 'circl_score': None}
     geo_dict = IPs_from_URL(geo_dict)
     if geo_dict['IP'] == None:
         geo_json = json.dumps(geo_dict)
