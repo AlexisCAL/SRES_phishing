@@ -33,12 +33,12 @@ def dakl(domain):
 subdomain = 'Bonjour, monde !'
 
 # Make a blank image for the text, initialized to transparent text color
-size = width, height = 100, 30
-text = Image.new('RGBA', size, (255,255,255,0))
+size = width, height = 500, 30
+text = Image.new('RGB', size, (255,255,255))
 # get a font
-font = ImageFont.truetype('DejaVuSansMono.ttf', 40)
+font = ImageFont.truetype('DejaVuSansMono.ttf', 12)
 # get a drawing context
 draw = ImageDraw.Draw(text)
-draw.text((10,10), subdomain, font=font, fill=(255,255,255,255))
+draw.text((5, 9), subdomain, font=font, fill=(0,0,0))
 
-text.show()
+text.save('images/bonjour.jpg')

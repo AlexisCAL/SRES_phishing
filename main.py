@@ -1,5 +1,9 @@
 #!/usr/bin/env python3
+<<<<<<< HEAD
 # pip install python-Levenshtein pillow stix2
+=======
+# pip install python-Levenshtein pillow
+>>>>>>> a0effdf68e48f5ea53d58387645a41336ee2689f
 
 import sys
 
