@@ -1,12 +1,7 @@
 #!/usr/bin/env python3
-<<<<<<< HEAD
 # pip install python-Levenshtein pillow stix2
-=======
-# pip install python-Levenshtein pillow
->>>>>>> a0effdf68e48f5ea53d58387645a41336ee2689f
 
 import sys
-
 import stix2
 
 ext = open('open_data/clean_ext')
@@ -33,9 +28,9 @@ def feed_main(domain):
         print('dakl')
         # IPAPI pour trouver la langue pour l'océrisation
         # OCR:
-        # if cowd(domain) > 0:
-        # if VirusTotal:
-        # PHISHING
+            # if cowd(domain) > 0:
+                # if VirusTotal:
+                    # PHISHING
 
 
 if __name__ == '__main__':

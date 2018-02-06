@@ -41,4 +41,4 @@ font = ImageFont.truetype('DejaVuSansMono.ttf', 12)
 draw = ImageDraw.Draw(text)
 draw.text((5, 9), subdomain, font=font, fill=(0,0,0))
 
-text.save('images/bonjour.jpg')
+text.save('images/tmp.jpg')
