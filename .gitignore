@@ -4,4 +4,4 @@
 # Dolphin config file
 .directory
 
-images/*
+images/*.jpg
