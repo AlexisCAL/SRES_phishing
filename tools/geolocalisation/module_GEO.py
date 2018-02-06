@@ -31,7 +31,7 @@ def IPs_from_URL(url):
             for rdata in answers_IPv6:
                 IPlist['IP'] = rdata.address
         except :
-            print 'No IPv6 address found'
+            print('No IPv6 address found')
             IPlist['IP'] = None
 
     return IPlist

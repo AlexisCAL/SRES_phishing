@@ -1,7 +1,9 @@
 #!/usr/bin/env python3
-# pip install python-Levenshtein
+# pip install python-Levenshtein pillow stix2
 
 import sys
+
+import stix2
 
 ext = open('open_data/clean_ext')
 word = open('open_data/clean_word')
@@ -23,12 +25,14 @@ officials = [x.strip() for x in officials]
 def feed_main(domain):
     print(domain, "\n")
     if dakl(domain) > 0:
-        print('taggle')
-        #IPAPI pour trouver la langue pour l'océrisation
-        #OCR:
-        #if cowd(domain) > 0:
-            #if VirusTotal:
-                #PHISHING
+        country = localisation(domain)
+        print('dakl')
+        # IPAPI pour trouver la langue pour l'océrisation
+        # OCR:
+        # if cowd(domain) > 0:
+        # if VirusTotal:
+        # PHISHING
+
 
 if __name__ == '__main__':
     if len(sys.argv) == 1:
