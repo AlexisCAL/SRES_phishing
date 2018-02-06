@@ -1,8 +1,8 @@
 #!/usr/bin/env python3
 # pip3 install python-Levenshtein pillow stix2 dnspython ipapi pytesseract certstream
 # install tesseract
-#   pacman -S tesseract
-#   apt install tesseract-ocr
+#   pacman -S tesseract tesseract-data-eng tesseract-data-fra tesseract-data-rus tesseract-data-chi_sim
+#   apt install tesseract-ocr tesseract-ocr-fra tesseract-ocr-rus tesseract-ocr-chi-sim tesseract-ocr-eng
 #
 # git clone https://github.com/CIRCL/bgpranking-redis-api.git
 # cd bgpranking-redis-api/example/api_web/client
@@ -80,7 +80,7 @@ def phishing(domain):
 
 def feed_main(domains):
     for domain in domains:
-        print(domain, "\n")
+        print(domain)
         if dakl(domain) > 0:
             geo_result = localisation(domain)
             if geo_result['IP'] == None:
