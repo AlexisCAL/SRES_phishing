@@ -1,9 +1,9 @@
 #!/usr/bin/env python3
-# pip install python-Levenshtein pillow stix2 dnspython ipapi pytesseract
+# pip install python-Levenshtein pillow stix2 dnspython ipapi pytesseract certstream
 # install tesseract
 
 import sys
-
+from threading import Thread
 import stix2
 from datetime import datetime
 
@@ -28,6 +28,9 @@ with known as f:
     known_list = f.readlines()
 known_list = [x.strip() for x in known_list]
 known = open('open_data/white_list', 'w+')
+
+
+VT_threads = []
 
 def consume(bundle):
     for obj in bundle.objects:
@@ -77,7 +80,8 @@ def feed_main(domains):
                 phishing(domain)
                 continue
             if cowd(domain, geo_result['country']) > 0:
-                vt_result = VT_API_call(domain)
+                VT_threads.append(threading.Thread(target=VT_API_CALL, args=('nothing',domain)))
+                VT_threads[-1].start()
                 if vt_result == {}:
                     print("Error on virus total for ", domain)
                     continue
