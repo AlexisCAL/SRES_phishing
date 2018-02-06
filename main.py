@@ -29,11 +29,17 @@ def feed_main(domain):
     print(domain, "\n")
     if dakl(domain) > 0:
         geo_result = localisation(domain)
+        if geo_result['IP'] == None:
+            print("Error on ipapi for ", domain)
+            return
         if geo_result['geo_score'] or geo_result['circl_score'] > 0.1:
             phishing(domain)
             return
         if cowd(domain, gep_result['country']) > 0:
             vt_result = VT_API_call(domain)
+            if vt_result == {}:
+                print("Error on virus total for ", domain)
+                return
             if vt_result['VT_score'] > 0:
                 phishing(domain)
                 return
