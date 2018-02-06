@@ -1,6 +1,6 @@
 #!/usr/bin/env python3
-# pip install python-Levenshtein pillow stix2 dnspython ipapi piteseract
-# install teseract
+# pip install python-Levenshtein pillow stix2 dnspython ipapi pytesseract
+# install tesseract
 
 import sys
 
