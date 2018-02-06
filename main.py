@@ -37,9 +37,9 @@ if __name__ == '__main__':
         elif sys.argv[1] == 'vt':
             exec(open('tools/virus_total/module_VT.py').read())
         elif sys.argv[1] == 'levenshtein':
-            exec(open('tools/levenshtein/module_Levenshtein.py').read())
+            exec(open('tools/levenshtein/module_SN.py').read())
         elif sys.argv[1] == 'all':
             exec(open('tools/geolocalisation/module_GEO.py').read())
             exec(open('tools/virus_total/module_VT.py').read())
-            exec(open('tools/levenshtein/module_Levenshtein.py').read())
+            exec(open('tools/levenshtein/module_SN.py').read())
             exec(open('tools/certstream/module_CS.py').read())
