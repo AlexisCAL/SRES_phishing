@@ -5,6 +5,7 @@
 import sys
 
 import stix2
+from datetime import datetime
 
 ext = open('open_data/clean_ext')
 word = open('open_data/clean_word')
@@ -23,6 +24,45 @@ with add as f:
 officials = [x.strip() for x in officials]
 
 known_list = extensions + words
+known = open('open_data/white_list', 'w')
+for w in known_list:
+    known.write("%s\n" % w)
+
+def consume(bundle):
+    for obj in bundle.objects:
+        if obj == indicator:
+            print("------------------")
+            print("== INDICATOR ==")
+            print("------------------")
+            print("ID: " + obj.id)
+            print("Created: " + str(obj.created))
+            print("Modified: " + str(obj.modified))
+            print("Name: " + obj.name)
+            print("Description: " + obj.description)
+            print("Labels: " + obj.labels[0])
+            print("Pattern: " + obj.pattern)
+            print("Valid From: " + str(obj.valid_from))
+
+
+def phishing(domain):
+    now = datetime.today().astimezone().isoformat()
+    indicator = stix2.Indicator(
+        created=now,
+        modified=now,
+        name="Malicious site trying fishing",
+        description="This organized threat actor group operates to get fishes.",
+        labels=["malicious-activity"],
+        pattern="[url:value = '" + domain + "']",
+        valid_from=now
+    )
+
+    foothold = stix2.KillChainPhase(
+        kill_chain_name="mandiant-attack-lifecycle-model",
+        phase_name="establish-foothold"
+    )
+
+    bundle = stix2.Bundle(objects=[indicator])
+    print(consume(bundle))
 
 
 def feed_main(domain):
@@ -44,9 +84,12 @@ def feed_main(domain):
                 phishing(domain)
                 return
             known_list += domain.split('.')
+            for w in domain.split('.'):
+                known.write("%s\n" % w)
             return
     known_list += domain.split('.')
-
+    for w in domain.split('.'):
+        known.write("%s\n" % w)
 
 if __name__ == '__main__':
     if len(sys.argv) == 1:
