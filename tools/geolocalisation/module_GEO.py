@@ -1,11 +1,8 @@
-# git clone https://github.com/CIRCL/bgpranking-redis-api.git
-# cd bgpranking-redis-api/example/api_web/client
-# python setup.py build
-# python setup.py install
-
 import json
+
 import dns.resolver
 import ipapi
+
 import bgpranking_web
 
 # host = 'animadores.ceroveinticinco.gov.ar'
@@ -15,9 +12,9 @@ host = '*.MOSAL.gov.kw'
 def IPs_from_URL(geo_dict):
     IP = {}
     url = geo_dict['url']
-    domains = url.split('.',1)
+    domains = url.split('.', 1)
 
-    if domains[0]=='*':
+    if domains[0] == '*':
         url = domains[-1]
         geo_dict['url'] = url
     try:
@@ -61,6 +58,7 @@ def matching_country(country1, geo_dict):
         geo_dict['geo_score'] = False
 
     return geo_dict
+
 
 def Circl_API_call(geo_dict):
     ip = geo_dict['IP']
@@ -114,4 +112,4 @@ def localisation(url):
         return geo_json
 
 
-#localisation(host)
+# localisation(host)

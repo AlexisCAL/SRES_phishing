@@ -8,6 +8,7 @@ VT_URL_report = 'https://www.virustotal.com/vtapi/v2/url/report'
 VT_URL_scan = 'https://www.virustotal.com/vtapi/v2/url/scan'
 VT_API_key = open('tools/virus_total/VT_APIkey.txt').readlines()[0].strip()
 
+
 def format_url(url):
     # If we need the 'http://' format
     new_url = 'http://www.' + url
@@ -73,4 +74,4 @@ def VT_API_call(url):
     return ret
 
 
-#VT_API_call('banovici.gov.ba')
+# VT_API_call('banovici.gov.ba')
