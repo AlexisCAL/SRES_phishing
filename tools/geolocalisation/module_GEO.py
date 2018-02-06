@@ -4,19 +4,22 @@
 # python setup.py install
 
 import json
-
 import dns.resolver
 import ipapi
-
 import bgpranking_web
 
 # host = 'animadores.ceroveinticinco.gov.ar'
-host = 'gold.service.gov.au'
+host = '*.MOSAL.gov.kw'
 
 
 def IPs_from_URL(geo_dict):
     IP = {}
     url = geo_dict['url']
+    domains = url.split('.',1)
+
+    if domains[0]=='*':
+        url = domains[-1]
+        geo_dict['url'] = url
     try:
         answers_IP = dns.resolver.query(url, 'A')
         for rdata in answers_IP:
@@ -59,7 +62,6 @@ def matching_country(country1, geo_dict):
 
     return geo_dict
 
-
 def Circl_API_call(geo_dict):
     ip = geo_dict['IP']
     circl_lookup = bgpranking_web.ip_lookup(ip)
@@ -101,15 +103,15 @@ def localisation(url):
                 'country': None, 'geo_score': False, 'circl_score': None}
     geo_dict = IPs_from_URL(geo_dict)
     if geo_dict['IP'] == None:
-        geo_json = json.dumps(geo_dict)
+        geo_json = geo_dict
         print(geo_json)
         return geo_json
     else:
         geo_dict = Country_from_IPs(geo_dict)
         geo_dict = Circl_API_call(geo_dict)
-        geo_json = json.dumps(geo_dict)
+        geo_json = geo_dict
         print(geo_json)
         return geo_json
 
 
-localisation(host)
+#localisation(host)
