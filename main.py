@@ -1,3 +1,4 @@
+#!/usr/bin/env python3
 # pip install python-Levenshtein
 
 import sys
@@ -22,6 +23,7 @@ officials = [x.strip() for x in officials]
 def feed_main(domain):
     print(domain, "\n")
     if dakl(domain) > 0:
+        print('taggle')
         #IPAPI pour trouver la langue pour l'océrisation
         #OCR:
         #if cowd(domain) > 0:
@@ -29,14 +31,17 @@ def feed_main(domain):
                 #PHISHING
 
 if __name__ == '__main__':
-    if len(sys.argv) == 2:
+    if len(sys.argv) == 1:
+        print('You need to input an argument:')
+        print('cs, geo, vt, sn, all')
+    elif len(sys.argv) == 2:
         if sys.argv[1] == 'cs':
             exec(open('tools/certstream/module_CS.py').read())
         elif sys.argv[1] == 'geo':
             exec(open('tools/geolocalisation/module_GEO.py').read())
         elif sys.argv[1] == 'vt':
             exec(open('tools/virus_total/module_VT.py').read())
-        elif sys.argv[1] == 'levenshtein':
+        elif sys.argv[1] == 'sn':
             exec(open('tools/levenshtein/module_SN.py').read())
         elif sys.argv[1] == 'all':
             exec(open('tools/geolocalisation/module_GEO.py').read())
