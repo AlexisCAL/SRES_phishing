@@ -21,6 +21,12 @@ word = open('open_data/clean_word')
 add = open('open_data/clean_add')
 known = open('open_data/white_list')
 
+
+with known as f:
+    known_list = f.readlines()
+known_list = [x.strip() for x in known_list]
+known = open('open_data/white_list', 'a')
+
 with ext as f:
     extensions = f.readlines()
 extensions = [x.strip() for x in extensions]
@@ -32,11 +38,6 @@ words = [x.strip() for x in words]
 with add as f:
     officials = f.readlines()
 officials = [x.strip() for x in officials]
-
-with known as f:
-    known_list = f.readlines()
-known_list = [x.strip() for x in known_list]
-known = open('open_data/white_list', 'a')
 
 
 VT_threads = []
