@@ -2,6 +2,7 @@
 # pip install python-Levenshtein pillow stix2
 
 import sys
+
 import stix2
 
 ext = open('open_data/clean_ext')
@@ -29,8 +30,8 @@ def feed_main(domain):
         # IPAPI pour trouver la langue pour l'océrisation
         # OCR:
         # if cowd(domain) > 0:
-            # if VirusTotal:
-                # PHISHING
+        #     if VirusTotal:
+        #         PHISHING
 
 
 if __name__ == '__main__':

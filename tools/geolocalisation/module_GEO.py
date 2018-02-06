@@ -7,9 +7,11 @@
 # python setup.py install
 
 import json
-import bgpranking_web
+
 import dns.resolver
 import ipapi
+
+import bgpranking_web
 
 # host = 'animadores.ceroveinticinco.gov.ar'
 host = 'gold.service.gov.au'
@@ -25,12 +27,12 @@ def IPs_from_URL(url):
         print('No IPv4 address found')
         IPlist['IP'] = None
 
-    if IPlist['IP'] == None :
-        try :
+    if IPlist['IP'] == None:
+        try:
             answers_IPv6 = dns.resolver.query(url, 'AAAA')
             for rdata in answers_IPv6:
                 IPlist['IP'] = rdata.address
-        except :
+        except:
             print('No IPv6 address found')
             IPlist['IP'] = None
 
@@ -70,7 +72,8 @@ def Circl_API_call(geo_dict):
         asn = int(circl_lookup['history'][0]['asn'])
         # asn = 43765 # Top ranked asn on 02/05
         geo_dict['asn'] = asn
-        circl_ranks = bgpranking_web.all_ranks_single_asn(asn, None, None, None, None)
+        circl_ranks = bgpranking_web.all_ranks_single_asn(
+            asn, None, None, None, None)
         ranks = []
         average = 0
         try:
