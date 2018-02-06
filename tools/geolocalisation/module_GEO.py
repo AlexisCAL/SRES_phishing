@@ -114,4 +114,4 @@ def localisation(url):
         return geo_json
 
 
-localisation(host)
+#localisation(host)

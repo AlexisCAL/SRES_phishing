@@ -10,6 +10,7 @@ from datetime import datetime
 ext = open('open_data/clean_ext')
 word = open('open_data/clean_word')
 add = open('open_data/clean_add')
+known = open('open_data/white_list')
 
 with ext as f:
     extensions = f.readlines()
@@ -23,25 +24,24 @@ with add as f:
     officials = f.readlines()
 officials = [x.strip() for x in officials]
 
-known_list = extensions + words
-known = open('open_data/white_list', 'w')
-for w in known_list:
-    known.write("%s\n" % w)
+with known as f:
+    known_list = f.readlines()
+known_list = [x.strip() for x in known_list]
+known = open('open_data/white_list', 'w+')
 
 def consume(bundle):
     for obj in bundle.objects:
-        if obj == indicator:
-            print("------------------")
-            print("== INDICATOR ==")
-            print("------------------")
-            print("ID: " + obj.id)
-            print("Created: " + str(obj.created))
-            print("Modified: " + str(obj.modified))
-            print("Name: " + obj.name)
-            print("Description: " + obj.description)
-            print("Labels: " + obj.labels[0])
-            print("Pattern: " + obj.pattern)
-            print("Valid From: " + str(obj.valid_from))
+        print("------------------")
+        print("== INDICATOR ==")
+        print("------------------")
+        print("ID: " + obj.id)
+        print("Created: " + str(obj.created))
+        print("Modified: " + str(obj.modified))
+        print("Name: " + obj.name)
+        print("Description: " + obj.description)
+        print("Labels: " + obj.labels[0])
+        print("Pattern: " + obj.pattern)
+        print("Valid From: " + str(obj.valid_from))
 
 
 def phishing(domain):
@@ -65,31 +65,34 @@ def phishing(domain):
     print(consume(bundle))
 
 
-def feed_main(domain):
-    print(domain, "\n")
-    if dakl(domain) > 0:
-        geo_result = localisation(domain)
-        if geo_result['IP'] == None:
-            print("Error on ipapi for ", domain)
-            return
-        if geo_result['geo_score'] or geo_result['circl_score'] > 0.1:
-            phishing(domain)
-            return
-        if cowd(domain, gep_result['country']) > 0:
-            vt_result = VT_API_call(domain)
-            if vt_result == {}:
-                print("Error on virus total for ", domain)
-                return
-            if vt_result['VT_score'] > 0:
+def feed_main(domains):
+    for domain in domains:
+        print(domain, "\n")
+        if dakl(domain) > 0:
+            geo_result = localisation(domain)
+            if geo_result['IP'] == None:
+                print("Error on ipapi for ", domain)
+                continue
+            if not geo_result['geo_score'] or geo_result['circl_score'] > 0.1:
                 phishing(domain)
-                return
-            known_list += domain.split('.')
-            for w in domain.split('.'):
-                known.write("%s\n" % w)
-            return
-    known_list += domain.split('.')
-    for w in domain.split('.'):
-        known.write("%s\n" % w)
+                continue
+            if cowd(domain, geo_result['country']) > 0:
+                vt_result = VT_API_call(domain)
+                if vt_result == {}:
+                    print("Error on virus total for ", domain)
+                    continue
+                if vt_result['VT_score'] > 0:
+                    phishing(domain)
+                    continue
+                subdomains = domain.split('.')
+                known_list += subdomains
+                for w in subdomains:
+                    known.write("%s\n" % w)
+                continue
+        subdomains = domain.split('.')
+        known_list += subdomains
+        for w in subdomains:
+            known.write("%s\n" % w)
 
 if __name__ == '__main__':
     if len(sys.argv) == 1:

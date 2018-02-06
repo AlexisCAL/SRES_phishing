@@ -73,4 +73,4 @@ def VT_API_call(url):
     return ret
 
 
-VT_API_call('banovici.gov.ba')
+#VT_API_call('banovici.gov.ba')
