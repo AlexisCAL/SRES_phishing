@@ -6,8 +6,7 @@ import requests
 
 VT_URL_report = 'https://www.virustotal.com/vtapi/v2/url/report'
 VT_URL_scan = 'https://www.virustotal.com/vtapi/v2/url/scan'
-VT_API_key = '7d683f2eeae6790c17b6a12d295894e9692bc06aa2af43e7851e7faba5dc8bcc'
-
+VT_API_key = open('tools/virus_total/VT_APIkey.txt').readlines()[0].strip()
 
 def format_url(url):
     # If we need the 'http://' format
@@ -28,8 +27,6 @@ def report_request(url):
     json_response = response.json()
     return json_response
 
-#
-
 
 def parsing_response(report_json):
     # report_data = json.dumps(report_json)
@@ -41,7 +38,6 @@ def parsing_response(report_json):
     for av in report_json['scans']:
         if report_json['scans'][av]['detected'] == True:
             result_data['VT_scan'].update({av: report_json['scans'][av]})
-    # Append positive scan to VT_scan but it doesn't parse through 'scans.detected'
 
     result_json = json.dumps(result_data)
     return result_json
