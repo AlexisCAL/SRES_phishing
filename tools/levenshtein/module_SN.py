@@ -4,7 +4,7 @@ from PIL import Image, ImageDraw, ImageFont
 
 filename = 'images/tmp'
 ext = '.jpg'
-pytesseract.pytesseract.tesseract_cmd = '/usr/bin/tesseract'
+pytesseract.pytesseract.tesseract_cmd = '/usr/bin/tesseract' #-ocr'
 
 # distance_against_known_list
 
