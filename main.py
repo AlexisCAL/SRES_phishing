@@ -1,5 +1,5 @@
 #!/usr/bin/env python3
-# pip install python-Levenshtein
+# pip install python-Levenshtein pillow
 
 import sys
 
@@ -23,7 +23,7 @@ officials = [x.strip() for x in officials]
 def feed_main(domain):
     print(domain, "\n")
     if dakl(domain) > 0:
-        print('taggle')
+        print('dakl')
         #IPAPI pour trouver la langue pour l'océrisation
         #OCR:
         #if cowd(domain) > 0:
