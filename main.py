@@ -1,5 +1,6 @@
 #!/usr/bin/env python3
-# pip install python-Levenshtein pillow stix2
+# pip install python-Levenshtein pillow stix2 dnspython ipapi piteseract
+# install teseract
 
 import sys
 
@@ -21,17 +22,24 @@ with add as f:
     officials = f.readlines()
 officials = [x.strip() for x in officials]
 
+known_list = extensions + words
+
 
 def feed_main(domain):
     print(domain, "\n")
     if dakl(domain) > 0:
-        country = localisation(domain)
-        print('dakl')
-        # IPAPI pour trouver la langue pour l'océrisation
-        # OCR:
-        # if cowd(domain) > 0:
-        #     if VirusTotal:
-        #         PHISHING
+        geo_result = localisation(domain)
+        if geo_result['geo_score'] or geo_result['circl_score'] > 0.1:
+            phishing(domain)
+            return
+        if cowd(domain, gep_result['country']) > 0:
+            vt_result = VT_API_call(domain)
+            if vt_result['VT_score'] > 0:
+                phishing(domain)
+                return
+            known_list += domain.split('.')
+            return
+    known_list += domain.split('.')
 
 
 if __name__ == '__main__':

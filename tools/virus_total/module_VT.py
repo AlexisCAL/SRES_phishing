@@ -49,7 +49,7 @@ def parsing_response(report_json):
 
 def VT_API_call(url):
     new_url = format_url(url)
-
+    ret = {}
     try:
         scan_json = scan_request(new_url)
         print('scan_request sucessful')
@@ -73,6 +73,8 @@ def VT_API_call(url):
         print(' >>>', ret)
     except:
         print('parsing_response failed for ', new_url)
+
+    return ret
 
 
 VT_API_call('banovici.gov.ba')
