@@ -28,9 +28,9 @@ def feed_main(domain):
         print('dakl')
         # IPAPI pour trouver la langue pour l'océrisation
         # OCR:
-            # if cowd(domain) > 0:
-                # if VirusTotal:
-                    # PHISHING
+        # if cowd(domain) > 0:
+            # if VirusTotal:
+                # PHISHING
 
 
 if __name__ == '__main__':
