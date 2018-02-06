@@ -46,7 +46,7 @@ def Country_from_IPs(geo_dict):
     try:
         geo_dict['country'] = ipapi.location(geo_dict['IP'], None, 'country')
     except:
-        print('No matching country found for IP:', IPlist['IP'])
+        print('No matching country found for IP:', geo_dict['IP'])
         geo_dict['country'] = None
 
     return geo_dict

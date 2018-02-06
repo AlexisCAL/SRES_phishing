@@ -1,11 +1,20 @@
 #!/usr/bin/env python3
-# pip install python-Levenshtein pillow stix2 dnspython ipapi pytesseract certstream
+# pip3 install python-Levenshtein pillow stix2 dnspython ipapi pytesseract certstream
 # install tesseract
+#   pacman -S tesseract
+#   apt install tesseract-ocr
+#
+# git clone https://github.com/CIRCL/bgpranking-redis-api.git
+# cd bgpranking-redis-api/example/api_web/client
+# 2to3 . -w
+# python3 setup.py build
+# python3 setup.py install
 
 import sys
-from threading import Thread
-import stix2
 from datetime import datetime
+from threading import Thread
+
+import stix2
 
 ext = open('open_data/clean_ext')
 word = open('open_data/clean_word')
@@ -27,10 +36,11 @@ officials = [x.strip() for x in officials]
 with known as f:
     known_list = f.readlines()
 known_list = [x.strip() for x in known_list]
-known = open('open_data/white_list', 'w+')
+known = open('open_data/white_list', 'a')
 
 
 VT_threads = []
+
 
 def consume(bundle):
     for obj in bundle.objects:
@@ -80,8 +90,10 @@ def feed_main(domains):
                 phishing(domain)
                 continue
             if cowd(domain, geo_result['country']) > 0:
-                VT_threads.append(threading.Thread(target=VT_API_CALL, args=('nothing',domain)))
+                VT_threads.append(threading.Thread(
+                    target=VT_API_CALL, args=('nothing', domain)))
                 VT_threads[-1].start()
+                VT_threads[-1].join()
                 if vt_result == {}:
                     print("Error on virus total for ", domain)
                     continue
@@ -97,6 +109,7 @@ def feed_main(domains):
         known_list += subdomains
         for w in subdomains:
             known.write("%s\n" % w)
+
 
 if __name__ == '__main__':
     if len(sys.argv) == 1:
