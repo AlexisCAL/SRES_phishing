@@ -38,7 +38,6 @@ def parsing_response(report_json):
     for av in report_json['scans']:
         if report_json['scans'][av]['detected'] == True:
             result_data['VT_scan'].update({av: report_json['scans'][av]})
-    # Append positive scan to VT_scan but it doesn't parse through 'scans.detected'
 
     result_json = json.dumps(result_data)
     return result_json
