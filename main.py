@@ -76,8 +76,8 @@ def score_domain(domain):
         score += domain.count('.') * 3
 
     # Testing Levenshtein distance for keywords in our list
-    if dakl(domain, words) > 0:
-        score += 10
+    if dakl(domain, words) == 1:
+        score += 15
 
         # Testing if the server is hosted in the same country as the extension suggests
         geo_result = localisation(domain)
