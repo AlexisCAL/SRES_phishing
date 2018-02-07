@@ -2,8 +2,6 @@ import pytesseract
 from Levenshtein import *
 from PIL import Image, ImageDraw, ImageFont
 
-filename = 'images/tmp'
-ext = '.jpg'
 pytesseract.pytesseract.tesseract_cmd = '/usr/bin/tesseract'  # -ocr'
 
 # distance_against_known_list
@@ -33,7 +31,8 @@ def make_image(subdomain):
     draw = ImageDraw.Draw(text)
     draw.text((5, 7), subdomain.upper(), font=font, fill=(0, 0, 0))
 
-    text.save(filename + ext)
+    return text
+    # text.save(filename + ext)
 
 # Compare Levenshtein distance of OCR with domain string
 # Langues supportées: fra, eng, rus, chi_sim.
@@ -45,10 +44,8 @@ def cowd(domain, language='eng'):
     for subdomain in subdomains:
         if subdomain == 'www':
             continue
-        make_image(subdomain.upper())
+        img = make_image(subdomain.upper())
         # Changer la langue en fonction de IPAPI
-        with Image.open(filename + ext) as f:
-            ocr = pytesseract.image_to_string(f, config='/usr/share/tessdata', lang='eng')  # lang=language. On ne supporte actuellement que l'anglais.
-        # print(ocr)
+        ocr = pytesseract.image_to_string(img, config='/usr/share/tessdata', lang='eng')  # lang=language. On ne supporte actuellement que l'anglais.
         d = max(d, distance(subdomain.upper(), ocr))
     return d
