@@ -46,6 +46,6 @@ def cowd(domain, language='eng'):
             continue
         img = make_image(subdomain.upper())
         # Changer la langue en fonction de IPAPI
-        ocr = pytesseract.image_to_string(img, config='/usr/share/tessdata', lang='eng')  # lang=language. On ne supporte actuellement que l'anglais.
+        ocr = pytesseract.image_to_string(img, config='/usr/share/tessdata', lang=language)  # lang=language. On ne supporte actuellement que l'anglais.
         d = max(d, distance(subdomain.upper(), ocr))
     return d

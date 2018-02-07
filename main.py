@@ -89,7 +89,7 @@ def score_domain(domain):
             score += 25
 
             # Testing for lookalike characters
-            if cowd(domain, geo_result['country']) > 0:
+            if cowd(domain) > 0:
                 score += 25
 
     # If the site is suspicious enough, send it to VirusTotal for analysis
