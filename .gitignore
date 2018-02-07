@@ -4,5 +4,3 @@
 # Dolphin config file
 .directory
 tools/__pycache__
-
-images/*.jpg
