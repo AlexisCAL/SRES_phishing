@@ -3,5 +3,6 @@
 
 # Dolphin config file
 .directory
+.pycache
 
 images/*.jpg
