@@ -96,7 +96,7 @@ def score_domain(domain):
     # Testing if the server is hosted in the same country as the extension suggests
     geo_result = localisation(domain)
     if geo_result['IP'] == None:
-        print("Error on ipapi for ", domain)
+        print("\nIP not found for", domain)
         return score
     # Testing for the score from CIRCL also
     elif not geo_result['geo_score'] or geo_result['circl_score'] > 0.1:
@@ -110,7 +110,7 @@ def score_domain(domain):
     if score >= 65:
         vt_result = VT_API_call(domain)
         if vt_result == {}:
-            print("Error on virus total for ", domain)
+            print("\nError on virus total for", domain)
             return score
         score += 50 * vt_result['VT_score']
 
