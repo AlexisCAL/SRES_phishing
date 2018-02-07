@@ -1,0 +1,13 @@
+{
+    "type": "indicator",
+    "id": "indicator--32b35619-c8bb-438c-b896-e54d82e821fb",
+    "created": "2018-02-07T13:18:48.258Z",
+    "modified": "2018-02-07T13:18:48.258Z",
+    "name": "Potential phishing website",
+    "description": "This website has got a score of 110.",
+    "pattern": "[url:value = 'webmail.mondayfootwear.info']",
+    "valid_from": "2018-02-07T13:18:48.258912Z",
+    "labels": [
+        "phishing"
+    ]
+}

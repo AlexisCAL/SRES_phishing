@@ -79,18 +79,18 @@ def score_domain(domain):
     if dakl(domain, words) > 0:
         score += 10
 
-    # Testing if the server is hosted in the same country as the extension suggests
-    geo_result = localisation(domain)
-    if geo_result['IP'] == None:
-        print("\nIP not found for", domain)
-        return score
-    # Testing for the score from CIRCL also
-    elif not geo_result['geo_score'] or geo_result['circl_score'] > 0.1:
-        score += 25
-
-        # Testing for lookalike characters
-        if cowd(domain, geo_result['country']) > 0:
+        # Testing if the server is hosted in the same country as the extension suggests
+        geo_result = localisation(domain)
+        if geo_result['IP'] == None:
+            print("\nIP not found for", domain)
+            return score
+        # Testing for the score from CIRCL also
+        elif not geo_result['geo_score'] or geo_result['circl_score'] > 0.1:
             score += 25
+
+            # Testing for lookalike characters
+            if cowd(domain, geo_result['country']) > 0:
+                score += 25
 
     # If the site is suspicious enough, send it to VirusTotal for analysis
     if score >= 100:
