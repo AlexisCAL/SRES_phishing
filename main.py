@@ -28,6 +28,7 @@ from tools.vt import *
 extensions = []
 addresses = []
 words = []
+logs = 'logs/'
 
 with open('open_data/clean_ext') as f:
     extensions = f.readlines()
@@ -42,21 +43,6 @@ with open('open_data/clean_add') as f:
 addresses = [x.strip() for x in addresses]
 
 
-def consume(bundle):
-    for obj in bundle.objects:
-        print("------------------")
-        print("== INDICATOR ==")
-        print("------------------")
-        print("ID: " + obj.id)
-        print("Created: " + str(obj.created))
-        print("Modified: " + str(obj.modified))
-        print("Name: " + obj.name)
-        print("Description: " + obj.description)
-        print("Labels: " + obj.labels[0])
-        print("Pattern: " + obj.pattern)
-        print("Valid From: " + str(obj.valid_from))
-
-
 def phishing(domain, score):
     indicator = stix2.Indicator(
         name="Potential phishing website",
@@ -65,8 +51,8 @@ def phishing(domain, score):
         pattern="[url:value = '" + domain + "']",
     )
 
-    bundle = stix2.Bundle(objects=[indicator])
-    print(consume(bundle))
+    with open(logs + indicator.id, 'w') as f:
+        print(indicator, file=f)
 
 
 def score_domain(domain):
