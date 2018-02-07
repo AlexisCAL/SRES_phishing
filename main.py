@@ -10,37 +10,36 @@
 # python3 setup.py build
 # python3 setup.py install
 
+import json
+import logging
 import sys
+import time
 from datetime import datetime
-from threading import Thread
 
+import certstream
 import stix2
+import tqdm
+from termcolor import colored, cprint
 
-ext = open('open_data/clean_ext')
-word = open('open_data/clean_word')
-add = open('open_data/clean_add')
-known = open('open_data/white_list')
+from tools.geo import *
+from tools.sn import *
+from tools.vt import *
 
+extensions = []
+addresses = []
+words = []
 
-with known as f:
-    known_list = f.readlines()
-known_list = [x.strip() for x in known_list]
-known = open('open_data/white_list', 'a')
-
-with ext as f:
+with open('open_data/clean_ext') as f:
     extensions = f.readlines()
 extensions = [x.strip() for x in extensions]
 
-with word as f:
+with open('open_data/clean_word') as f:
     words = f.readlines()
 words = [x.strip() for x in words]
 
-with add as f:
-    officials = f.readlines()
-officials = [x.strip() for x in officials]
-
-
-VT_threads = []
+with open('open_data/clean_add') as f:
+    addresses = f.readlines()
+addresses = [x.strip() for x in addresses]
 
 
 def consume(bundle):
@@ -58,75 +57,105 @@ def consume(bundle):
         print("Valid From: " + str(obj.valid_from))
 
 
-def phishing(domain):
+def phishing(domain, score):
     now = datetime.today().astimezone().isoformat()
     indicator = stix2.Indicator(
         created=now,
         modified=now,
-        name="Malicious site trying fishing",
-        description="This organized threat actor group operates to get fishes.",
-        labels=["malicious-activity"],
+        name="Potential phishing website",
+        description="This website has got a score of " + str(score) + ".",
+        labels=["phishing"],
         pattern="[url:value = '" + domain + "']",
         valid_from=now
-    )
-
-    foothold = stix2.KillChainPhase(
-        kill_chain_name="mandiant-attack-lifecycle-model",
-        phase_name="establish-foothold"
     )
 
     bundle = stix2.Bundle(objects=[indicator])
     print(consume(bundle))
 
 
-def feed_main(domains):
-    for domain in domains:
-        print(domain)
-        if dakl(domain) > 0:
-            geo_result = localisation(domain)
-            if geo_result['IP'] == None:
-                print("Error on ipapi for ", domain)
-                continue
-            if not geo_result['geo_score'] or geo_result['circl_score'] > 0.1:
-                phishing(domain)
-                continue
-            if cowd(domain, geo_result['country']) > 0:
-                VT_threads.append(threading.Thread(
-                    target=VT_API_CALL, args=('nothing', domain)))
-                VT_threads[-1].start()
-                VT_threads[-1].join()
-                if vt_result == {}:
-                    print("Error on virus total for ", domain)
-                    continue
-                if vt_result['VT_score'] > 0:
-                    phishing(domain)
-                    continue
-                subdomains = domain.split('.')
-                known_list += subdomains
-                for w in subdomains:
-                    known.write("%s\n" % w)
-                continue
-        subdomains = domain.split('.')
-        known_list += subdomains
-        for w in subdomains:
-            known.write("%s\n" % w)
+def score_domain(domain):
+    score = 0
+
+    # Remove initial '*.' for wildcard certificates bug
+    if domain.startswith('*.'):
+        domain = domain[2:]
+
+    # Testing keywords
+    for word in words:
+        if word in domain:
+            score += 20
+
+    # Lots of '-' (ie. www.paypal-datacenter.com-acccount-alert.com)
+    if 'xn--' not in domain and domain.count('-') >= 4:
+        score += domain.count('-') * 3
+
+    # Deeply nested subdomains (ie. www.paypal.com.security.accountupdate.gq)
+    if domain.count('.') >= 4:
+        score += domain.count('.') * 3
+
+    # Testing Levenshtein distance for keywords in our list
+    if dakl(domain, words) > 0:
+        score += 10
+
+    # Testing if the server is hosted in the same country as the extension suggests
+    geo_result = localisation(domain)
+    if geo_result['IP'] == None:
+        print("Error on ipapi for ", domain)
+        return score
+    # Testing for the score from CIRCL also
+    elif not geo_result['geo_score'] or geo_result['circl_score'] > 0.1:
+        score += 25
+
+        # Testing for lookalike characters
+        if cowd(domain, geo_result['country']) > 0:
+            score += 25
+
+    # If the site is suspicious enough, send it to VirusTotal for analysis
+    if score >= 65:
+        vt_result = VT_API_call(domain)
+        if vt_result == {}:
+            print("Error on virus total for ", domain)
+            return score
+        score += 50 * vt_result['VT_score']
+
+    return score
 
 
-if __name__ == '__main__':
-    if len(sys.argv) == 1:
-        print('You need to input an argument:')
-        print('cs, geo, vt, sn, all')
-    elif len(sys.argv) == 2:
-        if sys.argv[1] == 'cs':
-            exec(open('tools/certstream/module_CS.py').read())
-        elif sys.argv[1] == 'geo':
-            exec(open('tools/geolocalisation/module_GEO.py').read())
-        elif sys.argv[1] == 'vt':
-            exec(open('tools/virus_total/module_VT.py').read())
-        elif sys.argv[1] == 'sn':
-            exec(open('tools/levenshtein/module_SN.py').read())
-        elif sys.argv[1] == 'all':
-            exec(open('tools/geolocalisation/module_GEO.py').read())
-            exec(open('tools/virus_total/module_VT.py').read())
-            exec(open('tools/levenshtein/module_SN.py').read())
-            exec(open('tools/certstream/module_CS.py').read())
+def new_cert(message, context):
+    if message['message_type'] == "heartbeat":
+        return
+
+    if message['message_type'] == "certificate_update":
+        all_domains = message['data']['leaf_cert']['all_domains']
+
+        for domain in all_domains:
+            pbar.update(1)
+            score = score_domain(domain)
+
+            # If issued from a free CA = more suspicious
+            if "Let's Encrypt" in message['data']['chain'][0]['subject']['aggregated']:
+                score += 10
+
+            if score >= 100:
+                tqdm.tqdm.write(
+                    "[!] Suspicious: "
+                    "{} (score={})".format(colored(domain, 'red', attrs=['underline', 'bold']), score))
+            elif score >= 90:
+                tqdm.tqdm.write(
+                    "[!] Suspicious: "
+                    "{} (score={})".format(colored(domain, 'red', attrs=['underline']), score))
+            elif score >= 80:
+                tqdm.tqdm.write(
+                    "[!] Likely    : "
+                    "{} (score={})".format(colored(domain, 'yellow', attrs=['underline']), score))
+            elif score >= 65:
+                tqdm.tqdm.write(
+                    "[+] Potential : "
+                    "{} (score={})".format(colored(domain, attrs=['underline']), score))
+
+            if score >= 100:
+                phishing(domain, score)
+
+
+pbar = tqdm.tqdm(desc='certificate_update', unit='cert')
+certstream.listen_for_events(new_cert)

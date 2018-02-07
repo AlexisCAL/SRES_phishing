@@ -4,19 +4,19 @@ from PIL import Image, ImageDraw, ImageFont
 
 filename = 'images/tmp'
 ext = '.jpg'
-pytesseract.pytesseract.tesseract_cmd = '/usr/bin/tesseract' #-ocr'
+pytesseract.pytesseract.tesseract_cmd = '/usr/bin/tesseract'  # -ocr'
 
 # distance_against_known_list
 
 
-def dakl(domain):
+def dakl(domain, words):
     subdomains = domain.split('.')
     d = 0
     for subdomain in subdomains:
         if subdomain == 'www':
             continue
         tmp = 100
-        for k in known_list:
+        for k in words:
             dl = distance(subdomain, k)
             if dl < tmp:
                 tmp = dl
@@ -46,9 +46,9 @@ def cowd(domain, language='eng'):
         if subdomain == 'www':
             continue
         make_image(subdomain.upper())
-        # Changer la langue en fonction de IPAPI ?
+        # Changer la langue en fonction de IPAPI
         ocr = pytesseract.image_to_string(Image.open(
-            filename + ext), config='/usr/share/tessdata', lang='eng') # lang=language. On ne supporte actuellement que l'anglais.
-        print(ocr)
+            filename + ext), config='/usr/share/tessdata', lang='eng')  # lang=language. On ne supporte actuellement que l'anglais.
+        # print(ocr)
         d = max(d, distance(subdomain.upper(), ocr))
     return d

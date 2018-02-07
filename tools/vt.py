@@ -6,7 +6,7 @@ import requests
 
 VT_URL_report = 'https://www.virustotal.com/vtapi/v2/url/report'
 VT_URL_scan = 'https://www.virustotal.com/vtapi/v2/url/scan'
-VT_API_key = open('tools/virus_total/VT_APIkey.txt').readlines()[0].strip()
+VT_API_key = open('tools/VT_APIkey.txt').readlines()[0].strip()
 
 
 def format_url(url):
@@ -40,8 +40,7 @@ def parsing_response(report_json):
         if report_json['scans'][av]['detected'] == True:
             result_data['VT_scan'].update({av: report_json['scans'][av]})
 
-    result_json = json.dumps(result_data)
-    return result_json
+    return result_data
 
 
 def VT_API_call(url):
@@ -49,7 +48,7 @@ def VT_API_call(url):
     ret = {}
     try:
         scan_json = scan_request(new_url)
-        print('scan_request sucessful')
+        # print('scan_request sucessful')
         # print scan_json
     except:
         print('scan_request failed for ', new_url)
@@ -59,7 +58,7 @@ def VT_API_call(url):
 
     try:
         report_json = report_request(new_url)
-        print('report_request sucessful')
+        # print('report_request sucessful')
         # print report_json
     except:
         print('report_request failed for ', new_url)
@@ -67,7 +66,7 @@ def VT_API_call(url):
     try:
         ret = parsing_response(report_json)
         print('Result from VirusTotal verification :')
-        print(' >>>', ret)
+        print(ret)
     except:
         print('parsing_response failed for ', new_url)
 

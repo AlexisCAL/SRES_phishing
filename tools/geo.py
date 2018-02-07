@@ -5,25 +5,18 @@ import ipapi
 
 import bgpranking_web
 
-# host = 'animadores.ceroveinticinco.gov.ar'
-host = '*.MOSAL.gov.kw'
-
 
 def IPs_from_URL(geo_dict):
     IP = {}
     url = geo_dict['url']
-    domains = url.split('.', 1)
 
-    if domains[0] == '*':
-        url = domains[-1]
-        geo_dict['url'] = url
     try:
         answers_IP = dns.resolver.query(url, 'A')
         for rdata in answers_IP:
             IP['IP'] = rdata.address
         geo_dict['IP'] = IP['IP']
     except:
-        print('No IPv4 address found')
+        print('No IPv4 address found for domain ' + url)
         geo_dict['IP'] = None
 
     if geo_dict['IP'] == None:
@@ -33,7 +26,7 @@ def IPs_from_URL(geo_dict):
                 IP['IP'] = rdata.address
             geo_dict['IP'] = IP['IP']
         except:
-            print('No IPv6 address found')
+            print('No IPv6 address found for domain ' + url)
             geo_dict['IP'] = None
 
     return geo_dict
@@ -102,13 +95,13 @@ def localisation(url):
     geo_dict = IPs_from_URL(geo_dict)
     if geo_dict['IP'] == None:
         geo_json = geo_dict
-        print(geo_json)
+        # print(geo_json)
         return geo_json
     else:
         geo_dict = Country_from_IPs(geo_dict)
         geo_dict = Circl_API_call(geo_dict)
         geo_json = geo_dict
-        print(geo_json)
+        # print(geo_json)
         return geo_json
 
 
