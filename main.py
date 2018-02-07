@@ -51,7 +51,7 @@ def phishing(domain, score):
         pattern="[url:value = '" + domain + "']",
     )
 
-    with open(logs + indicator.id, 'w') as f:
+    with open(logs + indicator.id + '.log', 'w') as f:
         print(indicator, file=f)
 
 
