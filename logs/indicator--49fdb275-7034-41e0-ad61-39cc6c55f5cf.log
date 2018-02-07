@@ -1,0 +1,13 @@
+{
+    "type": "indicator",
+    "id": "indicator--49fdb275-7034-41e0-ad61-39cc6c55f5cf",
+    "created": "2018-02-07T15:19:34.120Z",
+    "modified": "2018-02-07T15:19:34.120Z",
+    "name": "Potential phishing website",
+    "description": "This website has got a score of 100.",
+    "pattern": "[url:value = 'fundamentalbusinessfinance.com']",
+    "valid_from": "2018-02-07T15:19:34.120561Z",
+    "labels": [
+        "phishing"
+    ]
+}

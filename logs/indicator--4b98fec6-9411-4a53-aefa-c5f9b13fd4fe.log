@@ -1,0 +1,13 @@
+{
+    "type": "indicator",
+    "id": "indicator--4b98fec6-9411-4a53-aefa-c5f9b13fd4fe",
+    "created": "2018-02-07T15:15:37.483Z",
+    "modified": "2018-02-07T15:15:37.483Z",
+    "name": "Potential phishing website",
+    "description": "This website has got a score of 100.",
+    "pattern": "[url:value = 'saintaidanscommunitycatholicchurchofcanada.com']",
+    "valid_from": "2018-02-07T15:15:37.483726Z",
+    "labels": [
+        "phishing"
+    ]
+}

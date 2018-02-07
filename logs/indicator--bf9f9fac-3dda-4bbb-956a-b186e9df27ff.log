@@ -1,0 +1,13 @@
+{
+    "type": "indicator",
+    "id": "indicator--bf9f9fac-3dda-4bbb-956a-b186e9df27ff",
+    "created": "2018-02-07T15:07:45.062Z",
+    "modified": "2018-02-07T15:07:45.062Z",
+    "name": "Potential phishing website",
+    "description": "This website has got a score of 130.",
+    "pattern": "[url:value = 'www.shopmountainflyermagazine.com']",
+    "valid_from": "2018-02-07T15:07:45.062214Z",
+    "labels": [
+        "phishing"
+    ]
+}

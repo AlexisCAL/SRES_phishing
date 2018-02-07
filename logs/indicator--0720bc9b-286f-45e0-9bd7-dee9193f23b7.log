@@ -1,0 +1,13 @@
+{
+    "type": "indicator",
+    "id": "indicator--0720bc9b-286f-45e0-9bd7-dee9193f23b7",
+    "created": "2018-02-07T15:19:47.223Z",
+    "modified": "2018-02-07T15:19:47.223Z",
+    "name": "Potential phishing website",
+    "description": "This website has got a score of 105.",
+    "pattern": "[url:value = 'free-bets-functionality-fix.widget.staging.cloud.oddschecker.com']",
+    "valid_from": "2018-02-07T15:19:47.223757Z",
+    "labels": [
+        "phishing"
+    ]
+}

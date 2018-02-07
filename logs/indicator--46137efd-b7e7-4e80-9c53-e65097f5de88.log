@@ -1,0 +1,13 @@
+{
+    "type": "indicator",
+    "id": "indicator--46137efd-b7e7-4e80-9c53-e65097f5de88",
+    "created": "2018-02-07T15:06:03.474Z",
+    "modified": "2018-02-07T15:06:03.474Z",
+    "name": "Potential phishing website",
+    "description": "This website has got a score of 110.",
+    "pattern": "[url:value = 'www.sunresidence.info']",
+    "valid_from": "2018-02-07T15:06:03.474907Z",
+    "labels": [
+        "phishing"
+    ]
+}

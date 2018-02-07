@@ -1,0 +1,13 @@
+{
+    "type": "indicator",
+    "id": "indicator--7226f72d-3713-40cf-b66b-b33770fad676",
+    "created": "2018-02-07T15:14:17.290Z",
+    "modified": "2018-02-07T15:14:17.290Z",
+    "name": "Potential phishing website",
+    "description": "This website has got a score of 138.",
+    "pattern": "[url:value = 'portal-ssl630-20.bmix-dal-yp-3230044a-5e02-4c7b-9f9a-33b465756e40.pmolina-itelsys-com-ec.composedb.com']",
+    "valid_from": "2018-02-07T15:14:17.290914Z",
+    "labels": [
+        "phishing"
+    ]
+}

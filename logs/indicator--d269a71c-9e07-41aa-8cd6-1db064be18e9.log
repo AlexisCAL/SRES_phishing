@@ -1,0 +1,13 @@
+{
+    "type": "indicator",
+    "id": "indicator--d269a71c-9e07-41aa-8cd6-1db064be18e9",
+    "created": "2018-02-07T15:05:23.534Z",
+    "modified": "2018-02-07T15:05:23.534Z",
+    "name": "Potential phishing website",
+    "description": "This website has got a score of 105.",
+    "pattern": "[url:value = 'www.solutionsinenergy.eu.kunden.ortsinfo.at']",
+    "valid_from": "2018-02-07T15:05:23.534861Z",
+    "labels": [
+        "phishing"
+    ]
+}

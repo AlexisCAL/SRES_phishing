@@ -1,0 +1,13 @@
+{
+    "type": "indicator",
+    "id": "indicator--3aeff47b-279c-42ac-8b28-09fbc68ca523",
+    "created": "2018-02-07T15:20:52.219Z",
+    "modified": "2018-02-07T15:20:52.219Z",
+    "name": "Potential phishing website",
+    "description": "This website has got a score of 102.",
+    "pattern": "[url:value = 'hehenberger-moebel.com.kunden.ortsinfo.at']",
+    "valid_from": "2018-02-07T15:20:52.219101Z",
+    "labels": [
+        "phishing"
+    ]
+}

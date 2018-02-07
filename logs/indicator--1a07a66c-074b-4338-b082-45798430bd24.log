@@ -1,0 +1,13 @@
+{
+    "type": "indicator",
+    "id": "indicator--1a07a66c-074b-4338-b082-45798430bd24",
+    "created": "2018-02-07T15:08:46.380Z",
+    "modified": "2018-02-07T15:08:46.380Z",
+    "name": "Potential phishing website",
+    "description": "This website has got a score of 110.",
+    "pattern": "[url:value = 'www.carolinabeachncphotography.com']",
+    "valid_from": "2018-02-07T15:08:46.380062Z",
+    "labels": [
+        "phishing"
+    ]
+}

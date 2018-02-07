@@ -1,0 +1,13 @@
+{
+    "type": "indicator",
+    "id": "indicator--ea6ce919-1c80-4f4c-862c-b26717335158",
+    "created": "2018-02-07T15:21:03.632Z",
+    "modified": "2018-02-07T15:21:03.632Z",
+    "name": "Potential phishing website",
+    "description": "This website has got a score of 110.",
+    "pattern": "[url:value = 'azczmurncbzabvn.zentrada.info']",
+    "valid_from": "2018-02-07T15:21:03.632313Z",
+    "labels": [
+        "phishing"
+    ]
+}

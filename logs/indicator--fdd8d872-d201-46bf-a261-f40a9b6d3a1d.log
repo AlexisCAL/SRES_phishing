@@ -1,0 +1,13 @@
+{
+    "type": "indicator",
+    "id": "indicator--fdd8d872-d201-46bf-a261-f40a9b6d3a1d",
+    "created": "2018-02-07T15:05:08.140Z",
+    "modified": "2018-02-07T15:05:08.140Z",
+    "name": "Potential phishing website",
+    "description": "This website has got a score of 110.",
+    "pattern": "[url:value = 'schimmoeller-osnabrueck.de']",
+    "valid_from": "2018-02-07T15:05:08.140949Z",
+    "labels": [
+        "phishing"
+    ]
+}
