@@ -8,7 +8,7 @@
 # cd bgpranking-redis-api/example/api_web/client
 # 2to3 . -w
 # python3 setup.py build
-# python3 setup.py install
+# sudo python3 setup.py install
 
 import json
 import logging
