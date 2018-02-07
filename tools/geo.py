@@ -16,7 +16,7 @@ def IPs_from_URL(geo_dict):
             IP['IP'] = rdata.address
         geo_dict['IP'] = IP['IP']
     except:
-        print('No IPv4 address found for domain ' + url)
+        # print('No IPv4 address found for domain ' + url)
         geo_dict['IP'] = None
 
     if geo_dict['IP'] == None:
@@ -26,7 +26,7 @@ def IPs_from_URL(geo_dict):
                 IP['IP'] = rdata.address
             geo_dict['IP'] = IP['IP']
         except:
-            print('No IPv6 address found for domain ' + url)
+            # print('No IPv6 address found for domain ' + url)
             geo_dict['IP'] = None
 
     return geo_dict
@@ -42,23 +42,12 @@ def Country_from_IPs(geo_dict):
     return geo_dict
 
 
-def matching_country(country1, geo_dict):
-    country2 = geo_dict['country']
-
-    if country1 == country2:
-        geo_dict['geo_score'] = True
-    else:
-        geo_dict['geo_score'] = False
-
-    return geo_dict
-
-
 def Circl_API_call(geo_dict):
     ip = geo_dict['IP']
     circl_lookup = bgpranking_web.ip_lookup(ip)
 
     country = circl_lookup['history'][0]['descriptions'][0][-1].split(' ')[-1]
-    geo_dict = matching_country(country, geo_dict)
+    geo_dict['geo_score'] = (country == geo_dict['country'])
     try:
         asn = int(circl_lookup['history'][0]['asn'])
         # asn = 43765 # Top ranked asn on 02/05
@@ -80,10 +69,9 @@ def Circl_API_call(geo_dict):
             average = ranks[-1]
         except:
             print('No ranks found for ASN : ', asn)
-
         geo_dict['circl_score'] = average
     except:
-        print('No ASN found for IP : ', ip)
+        # print('No ASN found for IP : ', ip)
         geo_dict['asn'] = None
 
     return geo_dict
@@ -94,15 +82,13 @@ def localisation(url):
                 'country': None, 'geo_score': False, 'circl_score': None}
     geo_dict = IPs_from_URL(geo_dict)
     if geo_dict['IP'] == None:
-        geo_json = geo_dict
         # print(geo_json)
-        return geo_json
+        return geo_dict
     else:
         geo_dict = Country_from_IPs(geo_dict)
         geo_dict = Circl_API_call(geo_dict)
-        geo_json = geo_dict
         # print(geo_json)
-        return geo_json
+        return geo_dict
 
 
 # localisation(host)

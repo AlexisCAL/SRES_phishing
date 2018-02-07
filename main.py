@@ -1,5 +1,5 @@
 #!/usr/bin/env python3
-# pip3 install python-Levenshtein pillow stix2 dnspython ipapi pytesseract certstream
+# pip3 install python-Levenshtein pillow stix2 dnspython ipapi pytesseract certstream tqdm termcolor
 # install tesseract
 #   pacman -S tesseract tesseract-data-eng tesseract-data-fra tesseract-data-rus tesseract-data-chi_sim
 #   apt install tesseract-ocr tesseract-ocr-fra tesseract-ocr-rus tesseract-ocr-chi-sim tesseract-ocr-eng
@@ -58,15 +58,11 @@ def consume(bundle):
 
 
 def phishing(domain, score):
-    now = datetime.today().astimezone().isoformat()
     indicator = stix2.Indicator(
-        created=now,
-        modified=now,
         name="Potential phishing website",
         description="This website has got a score of " + str(score) + ".",
         labels=["phishing"],
         pattern="[url:value = '" + domain + "']",
-        valid_from=now
     )
 
     bundle = stix2.Bundle(objects=[indicator])
@@ -136,19 +132,19 @@ def new_cert(message, context):
             if "Let's Encrypt" in message['data']['chain'][0]['subject']['aggregated']:
                 score += 10
 
-            if score >= 100:
+            if score >= 115:
                 tqdm.tqdm.write(
                     "[!] Suspicious: "
                     "{} (score={})".format(colored(domain, 'red', attrs=['underline', 'bold']), score))
-            elif score >= 90:
+            elif score >= 100:
                 tqdm.tqdm.write(
                     "[!] Suspicious: "
                     "{} (score={})".format(colored(domain, 'red', attrs=['underline']), score))
-            elif score >= 80:
+            elif score >= 90:
                 tqdm.tqdm.write(
                     "[!] Likely    : "
                     "{} (score={})".format(colored(domain, 'yellow', attrs=['underline']), score))
-            elif score >= 65:
+            elif score >= 75:
                 tqdm.tqdm.write(
                     "[+] Potential : "
                     "{} (score={})".format(colored(domain, attrs=['underline']), score))

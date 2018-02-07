@@ -65,8 +65,8 @@ def VT_API_call(url):
 
     try:
         ret = parsing_response(report_json)
-        print('Result from VirusTotal verification :')
-        print(ret)
+        # print('Result from VirusTotal verification :')
+        # print(ret)
     except:
         print('parsing_response failed for ', new_url)
 
