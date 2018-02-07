@@ -1,8 +1,8 @@
 #!/usr/bin/env python3
 # pip3 install python-Levenshtein pillow stix2 dnspython ipapi pytesseract certstream tqdm termcolor
 # install tesseract
-#   pacman -S tesseract tesseract-data-eng tesseract-data-fra tesseract-data-rus tesseract-data-chi_sim
-#   apt install tesseract-ocr tesseract-ocr-fra tesseract-ocr-rus tesseract-ocr-chi-sim tesseract-ocr-eng
+#   pacman -S tesseract tesseract-data-eng
+#   apt install tesseract-ocr  tesseract-ocr-eng
 #
 # git clone https://github.com/CIRCL/bgpranking-redis-api.git
 # cd bgpranking-redis-api/example/api_web/client
@@ -107,7 +107,7 @@ def score_domain(domain):
             score += 25
 
     # If the site is suspicious enough, send it to VirusTotal for analysis
-    if score >= 65:
+    if score >= 100:
         vt_result = VT_API_call(domain)
         if vt_result == {}:
             print("\nError on virus total for", domain)
